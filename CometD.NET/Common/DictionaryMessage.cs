@@ -93,12 +93,19 @@ namespace CometD.NetCore.Common
             get
             {
                 TryGetValue(MessageFields.ExtField, out var ext);
-                if (ext is string)
+                switch (ext)
                 {
-                    ext = JsonConvert.DeserializeObject((string)ext);
-                    this[MessageFields.ExtField] = ext;
+                    case null:
+                        return null;
+                    case string _:
+                        ext = JsonConvert.DeserializeObject((string)ext);
+                        this[MessageFields.ExtField] = ext;
+                        break;
                 }
-                return (Dictionary<string, object>)ext;
+
+                return ext.GetType() == typeof(Dictionary<string, object>)
+                    ? (Dictionary<string, object>)ext
+                    : ((JObject)ext).ToObject<Dictionary<string, object>>();
             }
         }
 

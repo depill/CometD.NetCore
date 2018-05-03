@@ -33,6 +33,10 @@ namespace CometD.NetCore.Bayeux
         public const string ReconnectRetryValue = "retry";
         public const string ReconnectHandshakeValue = "handshake";
         public const string ReconnectNoneValue = "none";
+        public const string ReplayField = "replay";
+        public const string ReplayIdField = "replayId";
+        public const string EventField = "event";
+
     }
 
     public interface IMessage : IDictionary<string, object>
